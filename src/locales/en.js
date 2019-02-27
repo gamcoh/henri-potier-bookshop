@@ -1,3 +1,5 @@
 export default {
-  'search': 'Search'
+  'search': 'Search',
+  'seeMore': 'See more',
+  'buy': 'Buy'
 }

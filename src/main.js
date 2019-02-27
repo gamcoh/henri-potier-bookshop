@@ -7,6 +7,7 @@ import Vuetify from 'vuetify'
 import Lang from 'vue-lang'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import store from './stores'
 
 import 'vuetify/dist/vuetify.min.css'
 
@@ -25,5 +26,6 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  store
 })

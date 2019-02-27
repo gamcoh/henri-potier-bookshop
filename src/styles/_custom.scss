@@ -2,6 +2,19 @@
 	font-family: 'Raleway', Arial;
 }
 
+.v-list__tile__title {
+	height: 38px;
+}
+
+.v-text-field {
+	margin-top: 0;
+	padding-top: 0;
+}
+
+.v-text-field--box input, .v-text-field--full-width input, .v-text-field--outline input {
+	margin-top: 0;
+}
+
 @media only screen and (min-width: 1904px) {
 	.container {
 		max-width: 1400px;

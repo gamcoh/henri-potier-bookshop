@@ -1,4 +1,3 @@
-
 <template>
   <v-container>
     <v-layout row wrap align-center>
@@ -15,39 +14,70 @@
 
           <v-card-title primary-title>
             <div>
-              <h3 class="headline mb-0">{{book.title}}</h3>
+              <h3 class="headline blue--text mb-10">{{book.title}}</h3>
+              <span class="title">{{book.price}}€</span>
             </div>
           </v-card-title>
 
-          <v-card-actions>
-            <v-btn flat color="orange">Share</v-btn>
-            <v-btn flat color="orange">Explore</v-btn>
-            <v-spacer></v-spacer>
-            <v-btn icon @click="showDesc[book.isbn] = !showDesc[book.isbn]">
-              <v-icon>{{showDesc[book.isbn] ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</v-icon>
-            </v-btn>
-          </v-card-actions>
+          <v-card-text>
+            {{book.synopsis | formatDesc}}
+          </v-card-text>
 
-          <v-slide-y-transition>
-            <v-card-text v-show="showDesc[book.isbn]">
-              <p v-for="(text, key) in book.synopsis" :key="key">{{text}}</p>
-            </v-card-text>
-          </v-slide-y-transition>
+          <v-card-actions>
+            <v-btn @click="showDesc(book)" depressed color="info">{{$lang.default.seeMore}}</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn depressed color="success" @click="addToCart(book)">{{$lang.default.buy}}</v-btn>
+          </v-card-actions>
         </v-card>
       </v-flex>
+
+      <v-dialog
+        v-model="currentDialogDesc"
+        width="500">
+
+        <v-card>
+          <v-card-title
+            class="headline grey lighten-2"
+            primary-title>
+            {{currentBook.title}}
+          </v-card-title>
+
+          <v-card-text>
+            <p
+              v-for="(desc, key) in currentBook.synopsis"
+              :key="key">
+              {{desc}}
+            </p>
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="primary"
+              flat
+              @click="currentDialogDesc = false">
+              {{$lang.default.close}}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-layout>
   </v-container>
 </template>
 
 <script>
 import {HTTP} from '@/globals/HTTP'
+import {mapActions} from 'vuex'
 
 export default {
   name: 'Home',
 
   data () {
     return {
-      showDesc: {},
+      currentDialogDesc: false,
+      currentBook: {},
       books: []
     }
   },
@@ -57,11 +87,29 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      addToCart: 'ShoppingCart/addToCart'
+    }),
+
+    showDesc (book) {
+      this.currentBook = book
+      this.currentDialogDesc = true
+    },
+
     getBooks () {
       HTTP.get()
         .then(res => {
           this.books = res.data
         })
+    }
+  },
+
+  filters: {
+    formatDesc (val) {
+      if (Array.isArray(val)) {
+        return val[0].substr(0, 80) + ' ...'
+      }
+      return val.substr(0, 80) + ' ...'
     }
   }
 }
