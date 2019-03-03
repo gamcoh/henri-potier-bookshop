@@ -9,6 +9,21 @@ const getters = {
 }
 
 const actions = {
+  removeBook ({ commit }, book) {
+    commit('REMOVE_BOOK', book)
+    commit('UPDATE_COUNT')
+  },
+  updateBookCount ({ commit }, { book, count }) {
+    if (count < 1) {
+      commit('REMOVE_BOOK', book)
+    } else {
+      commit('SET_BOOK_COUNT', {book, count})
+    }
+    commit('UPDATE_COUNT')
+  },
+  emptyBasket ({ commit }) {
+    commit('RESET_CART')
+  },
   setCart ({ commit }, value) {
     commit('SET_CURRENT_CART', value)
   },
@@ -26,6 +41,20 @@ const actions = {
 }
 
 const mutations = {
+  REMOVE_BOOK: (state, book) => {
+    state.cart = state.cart.filter(product => product.isbn !== book.isbn)
+  },
+  UPDATE_COUNT: state => {
+    state.count = state.cart.reduce((total, product) => product.count + total, 0)
+  },
+  SET_BOOK_COUNT: (state, {book, count}) => {
+    let b = state.cart.find(b => b.isbn === book.isbn)
+    b.count = parseInt(count)
+  },
+  RESET_CART: state => {
+    state.cart = []
+    state.count = 0
+  },
   SET_CURRENT_CART: (state, value) => (state.cart = value),
   ADD_TO_CART: (state, product) => (state.cart.push(product)),
   ITERATE_COUNT: state => (state.count++)

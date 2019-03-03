@@ -3,7 +3,16 @@
 }
 
 .v-list__tile__title {
-	height: 38px;
+	height: 40px;
+}
+
+.totalPrice {
+	margin: 0 10px;
+	font-size: 18px;
+}
+.discount {
+	font-size: 18px;
+	font-weight: bold;
 }
 
 .v-text-field {
