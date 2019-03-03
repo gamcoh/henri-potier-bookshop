@@ -33,7 +33,7 @@
 
         <v-list>
           <v-list-tile
-           @click="$setLang(l)"
+           @click="setLang(l)"
            v-for="(l, key) in langs"
            :key="key">
             <v-list-tile-title v-text="l" />
@@ -74,6 +74,13 @@ export default {
       cartShow: false,
       lang: 'fr',
       langs: ['fr', 'en']
+    }
+  },
+
+  methods: {
+    setLang (lang) {
+      this.$setLang(lang)
+      this.lang = lang
     }
   }
 }
