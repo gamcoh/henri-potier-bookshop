@@ -11,5 +11,7 @@ export default {
   'cancel': 'Annuler',
   'confirm': 'Confirmer',
   'info': 'Information',
-  'addedToCart': 'Ce produit a bien été ajouté à votre panier.'
+  'addedToCart': 'Ce produit a bien été ajouté à votre panier.',
+  'home': 'Accueil',
+  'shopping_cart': 'Mon panier'
 }

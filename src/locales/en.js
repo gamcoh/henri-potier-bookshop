@@ -11,5 +11,7 @@ export default {
   'cancel': 'Cancel',
   'confirm': 'Confirm',
   'info': 'Information',
-  'addedToCart': 'This product has been added to your shopping cart.'
+  'addedToCart': 'This product has been added to your shopping cart.',
+  'home': 'Home',
+  'shopping_cart': 'Shopping Cart'
 }

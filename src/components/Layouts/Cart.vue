@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-card color="cyan darken-2" class="white--text">
+    <v-card :color="color" :class="classes">
       <v-container>
-        <v-list three-line class="cyan darken-2 white--text">
+        <v-list three-line :class="color + ' ' + classes">
           <v-layout column v-if="books.length > 0">
             <div v-for="(book, key) in books" :key="book.isbn">
               <v-divider v-if="key > 0" inset></v-divider>
@@ -93,6 +93,19 @@ import {HTTP} from '@/globals/HTTP'
 
 export default {
   name: 'Cart',
+
+  props: {
+    color: {
+      type: String,
+      required: false,
+      default: 'cyan darken-2'
+    },
+    classes: {
+      type: String,
+      required: false,
+      default: 'white--text'
+    }
+  },
 
   data () {
     return {

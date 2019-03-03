@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
+import ShoppingCart from '@/components/ShoppingCart'
 import Navbar from '@/components/Layouts/Navbar'
 
 Vue.use(Router)
@@ -16,7 +17,19 @@ const router = new Router({
           path: '/',
           name: 'Home',
           components: { default: Home },
-          meta: { title: 'Henri Potier Shop - Bibliothèque' }
+          meta: { title: 'Henri Potier Shop' }
+        }
+      ]
+    },
+    {
+      path: '/shopping-cart',
+      component: Navbar,
+      children: [
+        {
+          path: '/',
+          name: 'ShoppingCart',
+          components: { default: ShoppingCart },
+          meta: { title: 'Henri Potier Shop' }
         }
       ]
     }

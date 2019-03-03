@@ -3,6 +3,19 @@
     <v-toolbar dark color="primary">
       <v-toolbar-title class="white--text">Henri Potier Bookshop</v-toolbar-title>
 
+      <v-toolbar-items class="hidden-sm-and-down ml-5">
+        <v-btn flat>
+          <router-link to="/">
+            {{$lang.default.home}}
+          </router-link>
+        </v-btn>
+        <v-btn flat>
+          <router-link to="/shopping-cart">
+            {{$lang.default.shopping_cart}}
+          </router-link>
+        </v-btn>
+      </v-toolbar-items>
+
       <v-spacer></v-spacer>
 
       <v-btn @click="cartShow = !cartShow" icon>
