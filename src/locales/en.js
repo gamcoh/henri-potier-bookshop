@@ -9,5 +9,7 @@ export default {
   'basketEmpty': 'The cart is empty. Select articles and find them here.',
   'confirmEmptyBasket': 'Are you sure you want to empty your cart?',
   'cancel': 'Cancel',
-  'confirm': 'Confirm'
+  'confirm': 'Confirm',
+  'info': 'Information',
+  'addedToCart': 'This product has been added to your shopping cart.'
 }

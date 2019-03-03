@@ -8,6 +8,7 @@ import Lang from 'vue-lang'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import store from './stores'
+import Notifications from 'vue-notification'
 
 import 'vuetify/dist/vuetify.min.css'
 
@@ -16,6 +17,7 @@ let locales = {
   'fr': require('@/locales/fr.js')
 }
 
+Vue.use(Notifications)
 Vue.use(VueAxios, axios)
 Vue.use(Lang, {lang: 'fr', locales})
 Vue.config.productionTip = false

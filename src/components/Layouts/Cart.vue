@@ -15,10 +15,10 @@
                 <v-list-tile-content>
                   <v-list-tile-title>
                     <v-layout row>
-                      <v-flex xs4>
-                        {{book.title}}
+                      <v-flex xs1 md5 lg4>
+                        <span class="mobile-none">{{book.title}}</span>
                       </v-flex>
-                      <v-flex xs1>
+                      <v-flex xs12 md1 lg1>
                         <v-text-field
                          box
                          type="number"
@@ -26,7 +26,7 @@
                          @change.native="updateBookCount({book, count: $event.target.value})"
                          height="20" />
                       </v-flex>
-                      <v-flex offset-xs2 xs1>
+                      <v-flex offset-xs1 offset-md2 xs12 md1 lg1>
                         {{book.price}}€
                       </v-flex>
                       <v-spacer></v-spacer>
@@ -48,7 +48,7 @@
       </v-container>
       <v-divider light></v-divider>
       <v-card-actions class="pa-3">
-        {{$lang.default.basket}} - <span class="totalPrice"><del>{{totalPrice}}€</del></span> <span class="discount">{{discount}}€</span>
+        {{$lang.default.basket}} - <span v-if="totalPrice !== discount" class="totalPrice"><del>{{totalPrice}}€</del></span> <span class="discount">{{discount}}€</span>
         <v-spacer></v-spacer>
         <v-btn
           v-if="books.length > 0"
@@ -124,7 +124,11 @@ export default {
 
         HTTP.get(`/${url}/commercialOffers`)
           .then(res => {
-            this.discount = this.totalPrice - res.data.offers[1].value
+            if (res.data.offers.length === 1) {
+              this.discount = this.totalPrice
+            } else {
+              this.discount = this.totalPrice - res.data.offers[1].value
+            }
           })
       },
       immediate: true

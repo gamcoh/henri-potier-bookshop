@@ -1,11 +1,16 @@
 <template>
   <v-container>
+    <v-text-field
+      :label="$lang.default.search"
+      v-model="search"
+      prepend-icon="search" />
+
     <v-layout row wrap align-center>
       <v-flex
        xs12
        sm3
        pa-2
-       v-for="book in books"
+       v-for="book in filteredBooks"
        :key="book.isbn">
         <v-card>
           <v-img
@@ -26,7 +31,7 @@
           <v-card-actions>
             <v-btn @click="showDesc(book)" depressed color="info">{{$lang.default.seeMore}}</v-btn>
             <v-spacer></v-spacer>
-            <v-btn depressed color="success" @click="addToCart(book)">{{$lang.default.buy}}</v-btn>
+            <v-btn depressed color="success" @click="addToCartHook(book)">{{$lang.default.buy}}</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -78,7 +83,15 @@ export default {
     return {
       currentDialogDesc: false,
       currentBook: {},
-      books: []
+      books: [],
+      filteredBooks: [],
+      search: ''
+    }
+  },
+
+  watch: {
+    search (val) {
+      this.filteredBooks = this.books.filter(book => book.title.toLowerCase().indexOf(val.toLowerCase()) !== -1)
     }
   },
 
@@ -91,6 +104,15 @@ export default {
       addToCart: 'ShoppingCart/addToCart'
     }),
 
+    async addToCartHook (book) {
+      await this.addToCart(book)
+      this.$notify({
+        group: 'notifs',
+        title: this.$lang.default.info,
+        text: this.$lang.default.addedToCart
+      })
+    },
+
     showDesc (book) {
       this.currentBook = book
       this.currentDialogDesc = true
@@ -99,7 +121,7 @@ export default {
     getBooks () {
       HTTP.get()
         .then(res => {
-          this.books = res.data
+          this.filteredBooks = this.books = res.data
         })
     }
   },
